@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <section class="section">
+        <div class="section-wrapper">
+            <form class="section-wrapper-form" method="post">
+                {% csrf_token %}
+                {{form.as_div}}
+                <input type="submit">
+            </form>
+        </div>
+    </section>
+{% endblock %}

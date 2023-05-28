@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-wrapper">
+            <nav class="header-wrapper-nav">
+                <div class="header-wrapper-nav_logo">
+                    Chatek
+                </div>
+                <form class="header-wrapper-nav-form">
+                    <input type="text">
+                    <input type="submit" value="Search">
+                </form>
+                <ul class="header-wrapper-nav-ul">
+                    <li class="header-wrapper-nav-ul-li">
+                        <a href="/" class="header-wrapper-nav-ul-li_a">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header-wrapper-user">
+            {% if user.is_authenticated %}
+                <div>{{user.username}}</div>
+            {% else %}
+                <ul class="header-wrapper-user-ul">
+                    <li class="header-wrapper-user-ul-li">
+                        <a href="/sign-in/">Sign in</a>
+                    </li>
+                    <li class="header-wrapper-user-ul-li">
+                        <a href="/sign-up/">Sign up</a>
+                    </li>
+                </ul>
+            {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock content %}
+</body>
+</html>
