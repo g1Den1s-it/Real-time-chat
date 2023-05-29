@@ -2,8 +2,17 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from user.models import User
-from user.forms import RegisterForm, LoginForm
+from user.forms import RegisterForm, LoginForm, EditProfileForm
 # Create your views here.
+
+class ProfileView(generic.View):
+    model = User
+    template_name = 'user/profile.html'
+    form_class = EditProfileForm
+
+    def get(self, request):
+        return render(request, self.template_name, {'form': self.form_class})
+
 
 class RegistrationView(generic.View):
     model = User
@@ -42,7 +51,6 @@ class LoginView(generic.View):
                 login(request,user)
                 return redirect('/')
             
-        print('not valid form ', request.POST)
         return render(request, self.template_name, {"form":self.form_class})
     
 

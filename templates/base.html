@@ -27,7 +27,19 @@
             </nav>
             <div class="header-wrapper-user">
             {% if user.is_authenticated %}
-                <div>{{user.username}}</div>
+                <div id="dropdown" onclick="visible()" class="header-wrapper-user-dropdown">
+                    <span>{{request.user.username}}</span>
+                    <div id="content" class="header-wrapper-user-dropdown-content">
+                        <ul class="header-wrapper-user-dropdown-content-ul">
+                            <li class="header-wrapper-user-dropdown-content-ul-li">
+                                <a class="header-wrapper-user-dropdown-content-ul-li_a" href="{% url 'edit-user' %}">Edit</a>
+                            </li>
+                            <li class="header-wrapper-user-dropdown-content-ul-li">
+                                <a class="header-wrapper-user-dropdown-content-ul-li_a" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             {% else %}
                 <ul class="header-wrapper-user-ul">
                     <li class="header-wrapper-user-ul-li">
@@ -43,5 +55,7 @@
     </header>
 
     {% block content %}{% endblock content %}
+
+    <script src="{% static 'scripts/app.js' %}"></script> 
 </body>
 </html>

@@ -1,5 +1,4 @@
 from django import forms   
-from django.contrib.auth.forms import UserCreationForm
 
 from user.models import User
 
@@ -12,6 +11,13 @@ class LoginForm(forms.Form):
     # class Meta:
     #     model = User
     #     fields = ['tag','password']
+
+
+class EditProfileForm(forms.ModelForm):
+    """form for edit user profile"""  
+    class Meta:
+        model = User
+        exclude = ('user_permissions', 'groups', 'password', 'is_superuser', 'is_staff', 'is_active', 'date_joined')
 
 
 class RegisterForm(forms.ModelForm):
