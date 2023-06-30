@@ -3,9 +3,12 @@
 {% block content %}
     <section class="profile">
         <div class="profile-wrapper">
-            <form action="/" method="post">
+            <img class="profile-wrapper-image" src="{{user.image.url}}" alt="avatar">
+            <form class="profile-wrapper-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_div}}
+                {% for field in form %}
+                {{ field.lable_tag }} {{field}}
+                {% endfor %}
                 <input type="submit" value="Save">
             </form>
         </div>
