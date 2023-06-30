@@ -8,11 +8,34 @@ from user.forms import RegisterForm, LoginForm, EditProfileForm
 class ProfileView(generic.View):
     model = User
     template_name = 'user/profile.html'
-    form_class = EditProfileForm
+    user = None
 
     def get(self, request):
-        return render(request, self.template_name, {'form': self.form_class})
+        try:
+            self.user = User.objects.get(tag = request.user.tag)
+        except AttributeError:
+            return redirect('sign-up')
 
+        form = EditProfileForm(instance=self.user)
+
+        return render(request, self.template_name, {'form': form, 'user': self.user})
+
+    def post(self, request): 
+        try:
+            self.user = User.objects.get(tag = request.user.tag)
+        except:
+            return redirect('sign-up')
+        
+        data = {**request.POST, **request.FILES}
+        for k,val in data.items():
+            if val == None or val[0] == '':
+                pass
+            else:
+                setattr(self.user, k, val[0])
+        self.user.save()
+
+        return redirect('edit-user')
+        
 
 class RegistrationView(generic.View):
     model = User
