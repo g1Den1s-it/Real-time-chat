@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from user.models import User
 from user.forms import RegisterForm, LoginForm, EditProfileForm
+
+
 # Create your views here.
 
 class ProfileView(generic.View):
@@ -12,40 +14,40 @@ class ProfileView(generic.View):
 
     def get(self, request):
         try:
-            self.user = User.objects.get(tag = request.user.tag)
+            self.user = User.objects.get(tag=request.user.tag)
         except AttributeError:
-            return redirect('sign-up')
+            return redirect('users:sign-up')
 
         form = EditProfileForm(instance=self.user)
 
-        return render(request, self.template_name, {'form': form, 'user': self.user})
+        return render(request, self.template_name, {'form': form})
 
-    def post(self, request): 
+    def post(self, request):
         try:
-            self.user = User.objects.get(tag = request.user.tag)
+            self.user = User.objects.get(tag=request.user.tag)
         except:
-            return redirect('sign-up')
-        
+            return redirect('users:sign-up')
+
         data = {**request.POST, **request.FILES}
-        for k,val in data.items():
+        for k, val in data.items():
             if val == None or val[0] == '':
                 pass
             else:
                 setattr(self.user, k, val[0])
         self.user.save()
 
-        return redirect('edit-user')
-        
+        return redirect('users:edit-user')
+
 
 class RegistrationView(generic.View):
     model = User
-    template_name = 'login/sign-up.html' 
+    template_name = 'login/sign-up.html'
     form_class = RegisterForm
 
     def get(self, request):
         form = self.form_class
-        return render(request, self.template_name, {"form":form})
-    
+        return render(request, self.template_name, {"form": form})
+
     def post(self, request):
         form = RegisterForm(request.POST)
 
@@ -53,30 +55,36 @@ class RegistrationView(generic.View):
             user = form.save(commit=False)
             user.save()
             login(request, user)
-            return redirect('/')
-        return render(request, self.template_name, {"form":form})
-    
+            return redirect('users:home')
+        return render(request, self.template_name, {"form": form})
+
 
 class LoginView(generic.View):
     model = User
-    template_name = 'login/sign-in.html' 
+    template_name = 'login/sign-in.html'
     form_class = LoginForm
 
     def get(self, request):
-        return render(request, self.template_name, {"form":self.form_class})
-    
+        return render(request, self.template_name, {"form": self.form_class})
+
     def post(self, request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
             user = authenticate(request, tag=form.cleaned_data['tag'], password=form.cleaned_data['password'])
             if user:
-                login(request,user)
-                return redirect('/')
-            
-        return render(request, self.template_name, {"form":self.form_class})
-    
+                login(request, user)
+                return redirect('users:home')
+
+        return render(request, self.template_name, {"form": self.form_class})
+
+
+class MainPageView(generic.View):
+    template_name = 'main/home.html'
+
+    def get(self, request):
+        return render(request, self.template_name,{})
 
 def logout_request(request):
     logout(request)
-    return redirect('/')
+    return redirect('users:home')
