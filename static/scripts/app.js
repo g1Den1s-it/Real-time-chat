@@ -1,14 +1,18 @@
-function unvisible(){
-    let div = document.getElementById("content")
-    let dropdown = document.getElementById("dropdown")
+const items = document.querySelectorAll("#item")
+const userImage = document.getElementById("user-image")
 
-    div.classList.remove("show")
-    dropdown.onclick = visible
-}
-function visible(){
-    let content = document.getElementById("content")
-    let dropdown = document.getElementById("dropdown")
+items.forEach(item => {
+    item.addEventListener('click', () =>{
+        items.forEach(i => {
+            i.classList.remove('active')
+        })
+        item.classList.add('active')
 
-    content.classList.add("show")
-    dropdown.onclick = unvisible
+    })
+})
+
+function randomColor() {
+  return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
+
+userImage.style.border = `2px solid ${randomColor()}`

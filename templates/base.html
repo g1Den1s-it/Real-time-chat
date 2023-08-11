@@ -9,51 +9,33 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="header">
-        <div class="header-wrapper">
-            <nav class="header-wrapper-nav">
-                <div class="header-wrapper-nav_logo">
-                    Chatek
-                </div>
-                <form class="header-wrapper-nav-form">
-                    <input type="text">
-                    <input type="submit" value="Search">
-                </form>
-                <ul class="header-wrapper-nav-ul">
-                    <li class="header-wrapper-nav-ul-li">
-                        <a href="/" class="header-wrapper-nav-ul-li_a">Home</a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="header-wrapper-user">
-            {% if user.is_authenticated %}
-                <div id="dropdown" onclick="visible()" class="header-wrapper-user-dropdown">
-                    <span>{{request.user.username}}</span>
-                    <div id="content" class="header-wrapper-user-dropdown-content">
-                        <ul class="header-wrapper-user-dropdown-content-ul">
-                            <li class="header-wrapper-user-dropdown-content-ul-li">
-                                <a class="header-wrapper-user-dropdown-content-ul-li_a" href="{% url 'edit-user' %}">Edit</a>
-                            </li>
-                            <li class="header-wrapper-user-dropdown-content-ul-li">
-                                <a class="header-wrapper-user-dropdown-content-ul-li_a" href="{% url 'logout' %}">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            {% else %}
-                <ul class="header-wrapper-user-ul">
-                    <li class="header-wrapper-user-ul-li">
-                        <a href="/sign-in/">Sign in</a>
-                    </li>
-                    <li class="header-wrapper-user-ul-li">
-                        <a href="/sign-up/">Sign up</a>
-                    </li>
-                </ul>
-            {% endif %}
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrapper">
+            <img src="{% static 'img/logo.png' %}" alt="LOGO">
+
+        <div class="sidebar-wrapper-menu">
+            <div id="item">
+                <img src="{% static 'img/chat-icon.svg' %}" alt="CHAT">
+            </div>
+            <div id="item">
+                <img src="{% static 'img/video-chat.svg' %}" alt="">
+            </div>
+            <div id="item">
+                <img src="{% static 'img/setting.svg' %}" alt="">
             </div>
         </div>
-    </header>
 
+        <div class="sidebar-wrapper-user">
+            {% if user.is_authenticated %}
+                {% if user.image %}
+                    <img id="user-image" class="sidebar-wrapper-user-image" src="{{ user.image.url }}" alt="">
+                {% else %}
+                    <p>{{ user.username }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        </div>
+    </div>
     {% block content %}{% endblock content %}
 
     <script src="{% static 'scripts/app.js' %}"></script> 

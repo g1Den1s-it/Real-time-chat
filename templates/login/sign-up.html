@@ -7,8 +7,11 @@
             <form class="section-wrapper-form" method="post">
                 {% csrf_token %}
                 {{form.as_div}}
-                <input type="submit" value="Submit">
+                <button class="section-wrapper-form-submit" type="submit" onclick="">SUBMIT</button>
             </form>
+            <div class="section-wrapper-other">
+                <a href="{% url 'users:sign-in' %}"> I have account</a>
+            </div>
         </div>
     </section>
 {% endblock %}

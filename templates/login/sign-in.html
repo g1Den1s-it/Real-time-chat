@@ -5,8 +5,11 @@
             <form class="section-wrapper-form" method="post">
                 {% csrf_token %}
                 {{form.as_div}}
-                <input type="Submit">
+                <button class="section-wrapper-form-submit" type="submit" onclick="">SUBMIT</button>
             </form>
+            <div class="section-wrapper-other">
+                <a href="{% url 'users:sign-up' %}">You don't have account?</a>
+            </div>
         </div>
     </section>
 {% endblock %}

@@ -5,8 +5,8 @@ from user.models import User
 
 class LoginForm(forms.Form):
     """Form for Login User"""
-    tag = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.PasswordInput())
+    tag = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-text'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-text'}))
 
 
 class EditProfileForm(forms.ModelForm):
@@ -36,11 +36,11 @@ class EditProfileForm(forms.ModelForm):
 
 class RegisterForm(forms.ModelForm):
     """User form for registration"""
-    username = forms.CharField(widget=forms.TextInput())
-    tag = forms.CharField(widget=forms.TextInput())
-    email = forms.EmailField(widget=forms.EmailInput())
-    password1 = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-text'}))
+    tag = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-text'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'input-text'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-text'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-text'}))
 
     class Meta:
         model = User
