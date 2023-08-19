@@ -51,11 +51,68 @@ body{
     width: 100%;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    &-message{
-        color: #b5b7bd;
-        font-size: 36px;
+    justify-content: space-between;
+    align-items: start;
+    &-wrapper{
+        width: 20%;
+        height: 100vh;
+        &-message{
+            color: #b5b7bd;
+            font-size: 36px;
+        }
+        &-message.deactive{
+            display: none;
+        }
+        &-name{
+            margin: 40px 0 200px 40px;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        &-chat{
+            margin-top: 10px;
+            width: 100%;
+            height: 65px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #323644;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        &-chat.open{
+            background-color: #1d90f5;
+        }
+    }
+    &-room{
+        width: 60%;
+        height: 100vh;
+        background-color: #323644;
+        margin-right: 300px;
+
+        &-message{
+            color: white;
+            margin-top: 30px;
+            background-color: #424656;
+            max-width: 70%;
+            margin-left: 40px;
+            padding: 7px 7px 7px 7px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            &-image{
+                width: 40px;
+                height: 40px;
+                border-radius: 50px;
+            }
+            &-text{
+                color: white;
+                margin-left: 10px;
+            }
+        }
     }
 }
 .section{

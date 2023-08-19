@@ -13,31 +13,31 @@
         <div class="sidebar-wrapper">
             <img src="{% static 'img/logo.png' %}" alt="LOGO">
 
-        <div class="sidebar-wrapper-menu">
-            <div id="item">
-                <img src="{% static 'img/chat-icon.svg' %}" alt="CHAT">
+            <div class="sidebar-wrapper-menu">
+                <div class="item" id="chat">
+                    <img src="{% static 'img/chat-icon.svg' %}" alt="CHAT">
+                </div>
+                <div class="item" id="video-chat">
+                    <img src="{% static 'img/video-chat.svg' %}" alt="">
+                </div>
+                <div class="item" id="setting">
+                    <img src="{% static 'img/setting.svg' %}" alt="">
+                </div>
             </div>
-            <div id="item">
-                <img src="{% static 'img/video-chat.svg' %}" alt="">
-            </div>
-            <div id="item">
-                <img src="{% static 'img/setting.svg' %}" alt="">
-            </div>
-        </div>
 
-        <div class="sidebar-wrapper-user">
-            {% if user.is_authenticated %}
-                {% if user.image %}
-                    <img id="user-image" class="sidebar-wrapper-user-image" src="{{ user.image.url }}" alt="">
-                {% else %}
-                    <p>{{ user.username }}</p>
+            <div class="sidebar-wrapper-user">
+                {% if user.is_authenticated %}
+                    {% if user.image %}
+                        <img id="user-image" class="sidebar-wrapper-user-image" src="{{ user.image.url }}" alt="">
+                    {% else %}
+                        <p>{{ user.username }}</p>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        </div>
+            </div>
         </div>
     </div>
     {% block content %}{% endblock content %}
 
-    <script src="{% static 'scripts/app.js' %}"></script> 
+    <script src="{% static 'scripts/app.js' %}"></script>
 </body>
 </html>
