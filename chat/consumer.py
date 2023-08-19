@@ -39,6 +39,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'id': mes.id,
                     'text': mes.text,
                     'owner': mes.owner.username,
+                    'date': mes.date.strftime('%H:%M'),
+                    'owner_image': mes.owner.image.url,
                 } for mes in message
             ]
         }
@@ -67,5 +69,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'image': user.image.url,
             }
         }
-        print(chats_list)
         return chats_list

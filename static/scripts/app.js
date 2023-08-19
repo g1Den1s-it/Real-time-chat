@@ -8,7 +8,6 @@ const wrapperDiv = document.getElementById("window-wrapper")
 const infoEl = document.getElementById('message')
 const nameDiv = document.getElementById('name')
 
-
 items.forEach(item => {
     item.addEventListener('click', () =>{
         items.forEach(i => {
@@ -23,7 +22,9 @@ function randomColor() {
   return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
-userImage.style.border = `2px solid ${randomColor()}`
+if (userImage != null){
+    userImage.style.border = `2px solid ${randomColor()}`
+}
 
 let activeSocket = false
 chatBtn.addEventListener('click', async () => {
@@ -73,6 +74,10 @@ chatBtn.addEventListener('click', async () => {
                     socket.send(JSON.stringify({
                         'chat': chat.getAttribute('custom-id')
                     }))
+                    const room = document.querySelector('.window-room')
+                    if (room !== null){
+                        room.remove()
+                    }
                 })
             })
         }else if(dataEvent['list_message']){
@@ -86,19 +91,28 @@ chatBtn.addEventListener('click', async () => {
                 const messageDiv = document.createElement('div')
                 const userImage = document.createElement('img')
                 const userText = document.createElement('div')
+                const username = document.createElement('div')
+                const time = document.createElement('div')
+                const info = document.createElement('div')
 
                 messageDiv.className = 'window-room-message'
-                userImage.className = 'window-room-message-image'
+                info.className = 'window-room-info'
+                userImage.className = 'window-room-info-image'
                 userText.className = 'window-room-message-text'
+                username.className = 'window-room-info-username'
+                time.className = 'window-room-info-time'
 
-                userImage.src = currentUser.image
+                userImage.src = message.owner_image
                 userText.textContent = message.text
-
+                username.textContent = message.owner
+                time.textContent = message.date
 
                 newDiv.appendChild(messageDiv)
-                messageDiv.appendChild(userImage)
                 messageDiv.appendChild(userText)
-
+                newDiv.appendChild(info)
+                info.appendChild(userImage)
+                info.appendChild(username)
+                info.appendChild(time)
             })
         }
     })
