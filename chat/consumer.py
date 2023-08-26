@@ -8,14 +8,14 @@ from django.shortcuts import get_object_or_404
 from chat.models import Chat, Message
 from user.models import User
 
+
 class ChatConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         self.user_data = await get_user(self.scope)
-        self.room_name = 'chats_' + self.user_data.username
-        self.channel_layer.group_add(self.room_name, self.channel_name)
+        self.room_name = 'chats'
+        await self.channel_layer.group_add(self.room_name, self.channel_name)
         await self.accept()
-
         await self.send(text_data=json.dumps(await self.get_user_chats()))
 
     async def disconnect(self, code):
@@ -27,8 +27,34 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
-        if text_data_json['chat']:
+        if 'chat' in text_data_json:
             await self.send(text_data=json.dumps(await self.get_message_data(text_data_json['chat'])))
+            await self.channel_layer.group_discard(self.room_name, self.channel_name)
+
+            self.room_name = text_data_json['chat']
+
+            await self.channel_layer.group_add(self.room_name, self.channel_name)
+
+        elif 'new_message' in text_data_json:
+            message = await self.save_message(
+                text_data_json['chat_name'],
+                text_data_json['new_message'])
+
+            print(f'room_name: {self.room_name}')
+            await self.channel_layer.group_send(
+                self.room_name,
+                {
+                    "type": "chat_message", "message": message
+                }
+            )
+
+    async def chat_message(self, event):
+        message = event['message']
+        print('called this def')
+        await self.send(text_data=json.dumps({
+            'type': 'chat',
+            'message': message
+        }))
 
     @database_sync_to_async
     def get_message_data(self, custom_id):
@@ -44,7 +70,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 } for mes in message
             ]
         }
-        print(message_list)
         return message_list
 
     @database_sync_to_async
@@ -70,3 +95,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         }
         return chats_list
+
+    @database_sync_to_async
+    def save_message(self, chat_name, message):
+        chat = get_object_or_404(Chat, custom_id=chat_name)
+        user = get_object_or_404(User, tag=self.user_data)
+        message = Message.objects.create(
+            text=message,
+            owner=user,
+            chat=chat
+        )
+        message.save()
+        message_object = {
+            'id': message.id,
+            'text': message.text,
+            'owner': message.owner.username,
+            'date': message.date.strftime('%H:%M'),
+            'owner_image': message.owner.image.url,
+        }
+        return message_object

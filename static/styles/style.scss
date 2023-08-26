@@ -89,10 +89,12 @@ body{
     }
     &-room{
         width: 60%;
-        height: 100vh;
+        height: 95vh;
         background-color: #323644;
         margin-right: 300px;
-
+        overflow: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
         &-message{
             color: white;
             margin-top: 30px;
@@ -130,6 +132,22 @@ body{
                 margin-left: 15px;
             }
         }
+        &-form{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            &-input{
+                width: 46%;
+            }
+            &-submit{
+                width: 10%;
+            }
+        }
+    }
+    &-room::-webkit-scrollbar{
+       width: 0;
     }
 }
 .section{
