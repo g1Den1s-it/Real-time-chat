@@ -72,12 +72,16 @@ body {
       background-color: #1d90f5; }
   .window-room {
     width: 60%;
-    height: 95vh;
+    height: 100vh;
     background-color: #323644;
-    margin-right: 300px;
-    overflow: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none; }
+    margin-right: 300px; }
+    .window-room-field {
+      height: 94.5%;
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none; }
+    .window-room-field::-webkit-scrollbar {
+      display: none; }
     .window-room-message {
       color: white;
       margin-top: 30px;
@@ -110,15 +114,13 @@ body {
         font-size: 14px;
         margin-left: 15px; }
     .window-room-form {
-      position: fixed;
-      bottom: 0;
       width: 100%;
       height: 50px;
       display: flex; }
       .window-room-form-input {
-        width: 46%; }
+        flex: 6; }
       .window-room-form-submit {
-        width: 10%; }
+        flex: 1; }
   .window-room::-webkit-scrollbar {
     width: 0; }
 

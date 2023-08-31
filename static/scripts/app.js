@@ -87,8 +87,12 @@ chatBtn.addEventListener('click', async () => {
             const messageData = dataEvent['list_message']
 
             const newDiv = document.createElement('div')
+            const fieldMessages = document.createElement('div')
+            fieldMessages.id = 'field-message'
+            fieldMessages.className = 'window-room-field'
             newDiv.id = 'room'
             newDiv.className = 'window-room'
+            newDiv.appendChild(fieldMessages)
             windowDiv.appendChild(newDiv)
 
             messageData.forEach(message =>{
@@ -155,16 +159,17 @@ chatBtn.addEventListener('click', async () => {
 })
 
 function createOnWindowMessage(message){
-    const room = document.getElementById('room')
+    const fieldMessage = document.getElementById('field-message')
 
     const messageDiv = document.createElement('div')
+    const textDiv = document.createElement('div')
     const userImage = document.createElement('img')
     const userText = document.createElement('div')
     const username = document.createElement('div')
     const time = document.createElement('div')
     const info = document.createElement('div')
 
-    messageDiv.className = 'window-room-message'
+    textDiv.className = 'window-room-message'
     info.className = 'window-room-info'
     userImage.className = 'window-room-info-image'
     userText.className = 'window-room-message-text'
@@ -176,9 +181,10 @@ function createOnWindowMessage(message){
     username.textContent = message.owner
     time.textContent = message.date
 
-    room.appendChild(messageDiv)
-    messageDiv.appendChild(userText)
-    room.appendChild(info)
+    fieldMessage.appendChild(messageDiv)
+    messageDiv.appendChild(textDiv)
+    textDiv.appendChild(userText)
+    messageDiv.appendChild(info)
     info.appendChild(userImage)
     info.appendChild(username)
     info.appendChild(time)
