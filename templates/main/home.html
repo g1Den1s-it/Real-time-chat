@@ -2,8 +2,14 @@
 {% block content %}
     <div id="window" class="window">
         <div id="window-wrapper" class="window-wrapper">
-            <div id="name" class="window-wrapper-name"></div>
+            <div id="name" class="window-wrapper-name">
+            </div>
             <p id="message" class="window-wrapper-message">choose one from two to starting</p>
+            <form class="window-wrapper-form" method="post" action="{% url 'create-chat' %}">
+                {% csrf_token %}
+                {{form.as_div}}
+                <input type="submit" value="Create">
+            </form>
             <div class="window-wrapper_list-chats"></div>
         </div>
     </div>

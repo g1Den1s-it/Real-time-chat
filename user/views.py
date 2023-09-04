@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from user.models import User
 from user.forms import RegisterForm, LoginForm, EditProfileForm
+from chat.forms import CreateChatForm
 
 
 # Create your views here.
@@ -81,9 +82,11 @@ class LoginView(generic.View):
 
 class MainPageView(generic.View):
     template_name = 'main/home.html'
+    form_class = CreateChatForm
 
     def get(self, request):
-        return render(request, self.template_name,{})
+        return render(request, self.template_name, {'form': self.form_class})
+
 
 def logout_request(request):
     logout(request)

@@ -30,6 +30,26 @@ if (userImage != null){
 }
 
 let activeSocket = false
+
+function addCreateChatBtn() {
+    const btn = document.createElement('div')
+
+    btn.textContent = '+'
+    btn.className = 'window-wrapper-btn'
+
+    btn.addEventListener('click', ()=>{
+        const form = document.querySelector('.window-wrapper-form')
+
+        if (form.classList.contains('open')){
+            form.classList.remove('open')
+        }else{
+            form.classList.add('open')
+        }
+    })
+
+    nameDiv.appendChild(btn)
+}
+
 chatBtn.addEventListener('click', async () => {
     if (activeSocket) {
         return
@@ -46,8 +66,8 @@ chatBtn.addEventListener('click', async () => {
 
         const dataEvent = JSON.parse(event.data)
         console.log(dataEvent)
-        nameDiv.innerHTML = "<p>Chat</p>"
-
+        nameDiv.innerHTML = "<div>Chat</div>"
+        addCreateChatBtn()
 
         if(dataEvent['user']){
             currentUser = dataEvent['user']
@@ -159,6 +179,10 @@ chatBtn.addEventListener('click', async () => {
         activeSocket = false
     })
 })
+
+function createChat(e){
+    
+}
 
 function createOnWindowMessage(message){
     const fieldMessage = document.getElementById('field-message')
