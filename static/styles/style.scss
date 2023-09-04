@@ -56,6 +56,8 @@ body{
     &-wrapper{
         width: 20%;
         height: 100vh;
+        display: flex;
+        flex-direction: column;
         &-message{
             color: #b5b7bd;
             font-size: 36px;
@@ -64,27 +66,39 @@ body{
             display: none;
         }
         &-name{
-            margin: 40px 0 200px 40px;
+            flex: 1;
             color: white;
             font-size: 32px;
             font-weight: bold;
+            p{
+                padding: 40px 40px 40px 40px;
+            }
         }
-        &-chat{
-            margin-top: 10px;
-            width: 100%;
-            height: 65px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            background-color: #323644;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
+        &_list-chats{
+            flex: 5;
+            overflow: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            &-chat{
+                margin-top: 10px;
+                width: 100%;
+                height: 65px;
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+                background-color: #323644;
+                border-radius: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+            &-chat.open{
+                background-color: #1d90f5;
+            }
         }
-        &-chat.open{
-            background-color: #1d90f5;
+        &_list-chats::-webkit-scrollbar{
+            width: 0;
         }
     }
     &-room{

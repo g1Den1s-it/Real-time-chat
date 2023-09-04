@@ -44,32 +44,43 @@ body {
   align-items: start; }
   .window-wrapper {
     width: 20%;
-    height: 100vh; }
+    height: 100vh;
+    display: flex;
+    flex-direction: column; }
     .window-wrapper-message {
       color: #b5b7bd;
       font-size: 36px; }
     .window-wrapper-message.deactive {
       display: none; }
     .window-wrapper-name {
-      margin: 40px 0 200px 40px;
+      flex: 1;
       color: white;
       font-size: 32px;
       font-weight: bold; }
-    .window-wrapper-chat {
-      margin-top: 10px;
-      width: 100%;
-      height: 65px;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      background-color: #323644;
-      border-radius: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer; }
-    .window-wrapper-chat.open {
-      background-color: #1d90f5; }
+      .window-wrapper-name p {
+        padding: 40px 40px 40px 40px; }
+    .window-wrapper_list-chats {
+      flex: 5;
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none; }
+      .window-wrapper_list-chats-chat {
+        margin-top: 10px;
+        width: 100%;
+        height: 65px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        background-color: #323644;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer; }
+      .window-wrapper_list-chats-chat.open {
+        background-color: #1d90f5; }
+    .window-wrapper_list-chats::-webkit-scrollbar {
+      width: 0; }
   .window-room {
     width: 60%;
     height: 100vh;

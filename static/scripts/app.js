@@ -7,7 +7,7 @@ const windowDiv = document.getElementById('window')
 const wrapperDiv = document.getElementById("window-wrapper")
 const infoEl = document.getElementById('message')
 const nameDiv = document.getElementById('name')
-
+const listChatsEl = document.querySelector('.window-wrapper_list-chats')
 items.forEach(item => {
     item.addEventListener('click', () =>{
         items.forEach(i => {
@@ -35,7 +35,6 @@ chatBtn.addEventListener('click', async () => {
         return
     }
 
-    window.history.pushState({}, '', '/chat/')
     infoEl.classList.add('deactive')
     const socket = new WebSocket('ws://' + window.location.host + '/ws/chat/')
     socket.addEventListener('open', ()=>{
@@ -47,7 +46,8 @@ chatBtn.addEventListener('click', async () => {
 
         const dataEvent = JSON.parse(event.data)
         console.log(dataEvent)
-        nameDiv.textContent = 'Chat'
+        nameDiv.innerHTML = "<p>Chat</p>"
+
 
         if(dataEvent['user']){
             currentUser = dataEvent['user']
@@ -57,12 +57,12 @@ chatBtn.addEventListener('click', async () => {
             const data = dataEvent['list_chat']
             data.forEach(chatData =>{
                 const newDiv = document.createElement('div')
-                newDiv.className = "window-wrapper-chat"
+                newDiv.className = "window-wrapper_list-chats-chat"
                 newDiv.setAttribute('custom-id', chatData['custom_id'])
                 newDiv.textContent = chatData['name']
-                wrapperDiv.appendChild(newDiv)
+                listChatsEl.appendChild(newDiv)
             })
-            const chatsDiv = document.querySelectorAll(".window-wrapper-chat")
+            const chatsDiv = document.querySelectorAll(".window-wrapper_list-chats-chat")
             chatsDiv.forEach(chat => {
                 chat.addEventListener('click', () => {
                     if(chat.classList.contains('open')){
