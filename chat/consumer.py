@@ -7,16 +7,28 @@ from django.shortcuts import get_object_or_404
 
 from chat.models import Chat, Message
 from user.models import User
+from django.urls import reverse
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
 
-    async def connect(self):
-        self.user_data = await get_user(self.scope)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.room_name = 'chats'
-        await self.channel_layer.group_add(self.room_name, self.channel_name)
-        await self.accept()
-        await self.send(text_data=json.dumps(await self.get_user_chats()))
+        self.user_data = None
+
+    async def connect(self):
+        user = self.scope['user']
+
+        if user.is_anonymous:
+            await self.accept()
+            await self.send(json.dumps({'redirect_url': reverse('users:sign-in')}))
+            await self.close()
+        else:
+            self.user_data = await get_user(self.scope)
+            await self.channel_layer.group_add(self.room_name, self.channel_name)
+            await self.accept()
+            await self.send(text_data=json.dumps(await self.get_user_chats()))
 
     async def disconnect(self, code):
         print(f"disconected: {code}")

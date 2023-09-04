@@ -46,6 +46,7 @@ chatBtn.addEventListener('click', async () => {
     socket.addEventListener('message', (event)=>{
 
         const dataEvent = JSON.parse(event.data)
+        console.log(dataEvent)
         nameDiv.textContent = 'Chat'
 
         if(dataEvent['user']){
@@ -143,8 +144,9 @@ chatBtn.addEventListener('click', async () => {
             })
         }else if (dataEvent['message']){
             const message = dataEvent['message']
-            console.log(message)
             createOnWindowMessage(message)
+        }else if (dataEvent['redirect_url']){
+            window.location.href = dataEvent['redirect_url']
         }
     })
 
