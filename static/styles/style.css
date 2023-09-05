@@ -139,12 +139,11 @@ body {
       max-width: 70%;
       padding: 7px 7px 7px 7px;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
       margin-left: 20px; }
       .window-room-message-text {
         color: white;
-        margin-left: 10px; }
+        margin-left: 10px;
+        word-wrap: break-word; }
     .window-room-info {
       display: flex;
       align-items: center; }
